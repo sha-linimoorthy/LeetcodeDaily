@@ -1,22 +1,21 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int,int> presum_freq;
+        int presum = 0;
         int count = 0;
-        int sum;
+        presum_freq[presum]++;
         for(int i=0;i<size(nums);i++)
         {
-            sum = 0;
-            for(int j=i;j<size(nums);j++)
+            presum += nums[i];
+            if(presum_freq.find(presum - k) != presum_freq.end())
             {
-                sum+=nums[j];
-                if(sum==k) count++;
+                count += presum_freq[(presum-k)];
             }
+            presum_freq[presum]++;
         }
 
         return count;
         
     }
 };
-
-
-   
