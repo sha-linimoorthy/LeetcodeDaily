@@ -27,7 +27,7 @@ public:
                 l--;
                 r++;
             }
-            if(c+p[c]< i+p[i]) //find longest center pali
+            if(p[c]< p[i]) //find longest center pali
                 c=i;
         }
         int max_len = INT_MIN, indx = 0;
@@ -40,7 +40,7 @@ public:
             }
             cout << p[i];
         }
-        int start = abs(indx - max_len) / 2;
+        int start = (indx - max_len) / 2;
         return s.substr(start, max_len);
         
     }
