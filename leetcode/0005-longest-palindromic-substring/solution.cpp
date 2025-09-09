@@ -1,30 +1,47 @@
 class Solution {
 public:
-    string findPali(int l, int r, int& maxLen, string &maxStr, string s)
+    string preProcess(string &s)
     {
-         while(l>=0 && r<s.length() && s[l]==s[r])
+        string str = "#";
+        for(char c: s)
+        {
+            str += c;
+            str += "#";
+        }
+        return str;
+    }
+    string longestPalindrome(string s) {
+        string str = preProcess(s);
+        int c = 0, r = 0, l = 0;
+        int n = str.length();
+        vector<int> p(n, 0);
+        for(int i=0; i<n; i++)
+        {
+            if(i < c+p[c]) //part of prev palindrome
+                p[i] = min(c+p[c]-i, p[2*c-i]); // min of right(inside boundry) or mirror 
+            l = i-p[i]-1;
+            r = i+p[i]+1;
+            while(l>=0 && r<n && str[l]==str[r])
             {
-                if((r - l + 1) > maxLen)
-                {
-                    maxStr = s.substr(l,r - l + 1);
-                    maxLen = r - l + 1;
-                }
+                p[i]++;
                 l--;
                 r++;
             }
-        return maxStr;
-    }
-    string longestPalindrome(string s) {
-        string maxStr="";
-        int maxLen = 0;
-        for(int i=0; i<s.length(); i++)
-        {
-            //Odd length
-            findPali(i,i,maxLen,maxStr,s);
-            //Even length
-            findPali(i,i+1,maxLen,maxStr,s);
-     
+            if(c+p[c]< i+p[i]) //find longest center pali
+                c=i;
         }
-        return maxStr;
+        int max_len = INT_MIN, indx = 0;
+        for(int i=0; i<p.size(); i++)
+        {
+            if(p[i] > max_len)
+            {
+                max_len = p[i];
+                indx = i;
+            }
+            cout << p[i];
+        }
+        int start = abs(indx - max_len) / 2;
+        return s.substr(start, max_len);
+        
     }
 };
