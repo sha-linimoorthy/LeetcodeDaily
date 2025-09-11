@@ -64,6 +64,32 @@ Node* insertElement(Node* head, int pos, int element)
     return head;
 }
 
+Node* insertBeforeValue(Node* head, int val, int element)
+{
+    if(head==NULL) 
+    {
+        return head;
+    }
+    if(head->data==val)
+    {
+        Node* n = new Node(element, head);
+        return n;
+    }
+    Node* temp = head;
+    while(temp->next!=NULL)
+    {
+        c++;
+        if(temp->next->data==element)
+        {
+            Node* n = new Node(element, temp->next);
+            temp->next = n;
+            break;
+        }
+        temp = temp->next;
+    }
+    return head;
+}
+
 void print(Node* head)
 {
     Node* temp = head;
