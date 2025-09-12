@@ -12,23 +12,22 @@ class Node{
             this->next = NULL;
             this->back = NULL;
         }
+    public:
         Node(int data, Node* next, Node* back) {
             this->data = data;
             this->next = next;
             this->back = back;
         }
-}
+};
 
 Node* convertDLL(vector<int> a)
 {
     Node* head = new Node(a[0]);
     Node* mover = head;
     for(int i=1; i<a.size(); i++) {
-        Node* temp = new Node(a[i]);
-        temp->back = mover;
+        Node* temp = new Node(a[i], nullptr, mover);
         mover->next = temp;
-        mover = mover->next;
-        delete temp;
+        mover = temp;
     }
     return head;
 }
@@ -37,7 +36,7 @@ void print(Node* head)
 {
     Node* temp = head;
     while(temp!=NULL){
-        cout << temp->data << " " << temp->back->data << " \n";
+        cout << temp->data << " ";
         temp = temp->next;
     }
 }
@@ -54,5 +53,6 @@ int main()
         a[i] = val;
     }
     Node* head = convertDLL(a);
-
+    print(head);
+    return 0;
 }
