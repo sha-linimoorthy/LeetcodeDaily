@@ -1,5 +1,11 @@
 class Solution {
 public:
+    double powerFun(double x, int n, double ans){
+        if(n==0) return ans;
+        if((n&1)==0) { x = x*x; n = n/2; }
+        else {ans*=x; n = n -1; }
+        return powerFun(x,n,ans);
+    }
     double myPow(double x, int n) {
         int power = n;
         double answer = 1;
@@ -15,21 +21,7 @@ public:
             else return 0;
         }
         if (n < 0) n = n * -1;
-        while(n > 0)
-        {
-            if (n%2==1) // Odd power 
-            {
-                answer *= x;
-                n = n - 1;
-            }
-            else
-            {
-                x *= x;
-                n /=2;
-            }
-        }
-        if (power < 0) return (1.0 / answer);
-        return answer;
-        
+        answer = powerFun(x, n, 1.0);
+        return (power<0)?(1/answer):answer;        
     }
 };
