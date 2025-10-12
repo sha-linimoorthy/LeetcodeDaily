@@ -10,33 +10,22 @@
  */
 class Solution {
 public:
-    ListNode* findEnd(ListNode* temp) {
-        while(temp->next!=NULL) temp= temp->next;
-        return temp;
-    }
-    int len(ListNode* temp) {
-        int n = 0;
-        while(temp!=NULL) {
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(head==NULL || head->next==NULL || k==0) return head;
+        ListNode* temp = head;
+        int n = 1;
+        while(temp->next!=NULL){
             n++;
             temp = temp->next;
         }
-        return n;
-    }
-    ListNode* rotateRight(ListNode* head, int k) {
-        if(head==NULL || head->next==NULL || k==0) return head;
-        int n = len(head);
-        if(n==k) return head;
-        n = n - (k%n) - 1;
-        ListNode* temp = head;
-        while(temp!=NULL && n--) {
+        n = n - k%n-1;
+        temp->next = head;
+        temp = head;
+        while(n--){
             temp = temp->next;
         }
-        ListNode* tail = temp;
-        ListNode* newHead = (temp->next)?(temp->next):head;
-        temp = findEnd(newHead);
-        temp->next = head;
-        tail->next = NULL;
-        return newHead;
-        
+        head = temp->next;
+        temp->next = NULL;
+        return head;
     }
 };
