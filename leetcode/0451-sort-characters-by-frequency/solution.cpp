@@ -17,7 +17,10 @@ public:
         {
             auto [freq, c] = pq.top();
             pq.pop();
-            result.append(freq, c);
+            while(freq){
+                result+=c;
+                freq--;
+            }
         }
 
         return result;
